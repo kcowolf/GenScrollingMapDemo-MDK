@@ -1,0 +1,4 @@
+[submodule "mdk"]
+	path = mdk
+	url = https://github.com/Mikejmoffitt/mdk.git
+	branch = master
