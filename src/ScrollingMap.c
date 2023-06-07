@@ -41,6 +41,7 @@ uint16_t bgTilesetStartIdx;
 
 uint16_t bgRowOffsets[ROW_OFFSET_COUNT];
 
+void updateVDP();
 void redrawBackgroundRow(uint16_t rowToUpdate);
 void redrawBackgroundColumn(uint16_t columnToUpdate);
 void redrawBackgroundScreen();
@@ -75,7 +76,7 @@ void ScrollingMap_init()
     }
 
     updateCamera();
-    ScrollingMap_updateVDP();
+    updateVDP();
     redrawBackgroundScreen();
 }
 
@@ -108,33 +109,30 @@ void ScrollingMap_update()
         // Moved down.
         redrawBackgroundRow(bgCameraTileY + SCREEN_TILE_HEIGHT);
     }
+
+    updateVDP();
 }
 
 void setHorizontalScroll(VdpPlane vdpPlane, int16_t value)
 {
-    if (vdpPlane == VDP_PLANE_B)
-    {
-        md_dma_transfer_vram(VRAM_HSCR_BASE_DEFAULT + 2, &value, 1, 2);
-    }
-    else
-    {
-        md_dma_transfer_vram(VRAM_HSCR_BASE_DEFAULT, &value, 1, 2);
-    }
+    static int16_t sHScrollData;
+    sHScrollData = value;
+    const uint16_t vramAddr = (vdpPlane == VDP_PLANE_B)
+                              ? VRAM_HSCR_BASE_DEFAULT + 2
+                              : VRAM_HSCR_BASE_DEFAULT;
+    md_dma_transfer_vram(vramAddr, &sHScrollData, 1, 2);
 }
 
 void setVerticalScroll(VdpPlane vdpPlane, int16_t value)
 {
-    if (vdpPlane == VDP_PLANE_B)
-    {
-        md_dma_transfer_vsram(2, &value, 1, 2);
-    }
-    else
-    {
-        md_dma_transfer_vsram(0, &value, 1, 2);
-    }
+    static int16_t sVScrollData;
+    sVScrollData = value;
+    const uint16_t vsramOffs = (vdpPlane == VDP_PLANE_B)
+                               ? 2 : 0;
+    md_dma_transfer_vsram(vsramOffs, &sVScrollData, 1, 2);
 }
 
-void ScrollingMap_updateVDP()
+void updateVDP()
 {
     // Background
     setHorizontalScroll(VDP_PLANE_B, -(bgCameraPixelX));
