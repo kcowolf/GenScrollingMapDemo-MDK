@@ -10,3 +10,8 @@ Thumbs.db
 
 # Folder config file
 Desktop.ini
+
+rom.gen
+rom.map
+res.h
+src/*.swp

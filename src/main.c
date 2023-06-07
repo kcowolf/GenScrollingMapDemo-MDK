@@ -22,9 +22,6 @@ int main()
     {
         Joypad_update();
         ScrollingMap_update();
-
-        // Wait for VBlank
         megadrive_finish();
-        ScrollingMap_updateVDP();
     }
 }
