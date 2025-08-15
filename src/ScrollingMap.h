@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-#define MAP_TILE_START_IDX 1
-
 #define VDP_PLANE_TILE_WIDTH 64
 #define VDP_PLANE_TILE_WIDTH_MINUS_ONE 63
 #define VDP_PLANE_TILE_WIDTH_TIMES_TWO 128

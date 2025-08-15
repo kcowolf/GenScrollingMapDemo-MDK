@@ -10,9 +10,11 @@ extern const uint16_t PAL_BG[16];
 extern const uint16_t PAL_FG[16];
 
 #define TILESET_BG_TILE_COUNT 934
+#define TILESET_BG_START_IDX 41
 extern const uint32_t TILESET_BG[TILESET_BG_TILE_COUNT][8];
 
 #define TILESET_FG_TILE_COUNT 40
+#define TILESET_FG_START_IDX 1
 extern const uint32_t TILESET_FG[TILESET_FG_TILE_COUNT][8];
 
 #define TILEMAP_BG_TILE_WIDTH 60
